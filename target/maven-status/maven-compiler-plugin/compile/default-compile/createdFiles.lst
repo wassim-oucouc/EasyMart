@@ -1,0 +1,12 @@
+org/example/easymart/enumeration/PaymentType.class
+org/example/easymart/entity/User.class
+org/example/easymart/enumeration/OrderStatus.class
+org/example/easymart/entity/Paiement.class
+org/example/easymart/enumeration/CustomerTier.class
+org/example/easymart/entity/Product.class
+org/example/easymart/EasyMartApplication.class
+org/example/easymart/enumeration/Role.class
+org/example/easymart/enumeration/PaymentStatus.class
+org/example/easymart/entity/Commande.class
+org/example/easymart/entity/Client.class
+org/example/easymart/entity/PromoCode.class
