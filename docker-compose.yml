@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: easymart_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: easymart_user
+      POSTGRES_PASSWORD: easymart_pass
+      POSTGRES_DB: easymart_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - easymart_data:/var/lib/postgresql/data
+    command: >
+      postgres
+      -c listen_addresses='*'
+      -c max_connections=200
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: easymart_pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8085:80"
+    depends_on:
+      - postgres
+
+volumes:
+  easymart_data:
