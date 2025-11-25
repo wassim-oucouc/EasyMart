@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: easymart_user
       POSTGRES_PASSWORD: easymart_pass
       POSTGRES_DB: easymart_db
+
     ports:
       - "5433:5432"
     volumes:
