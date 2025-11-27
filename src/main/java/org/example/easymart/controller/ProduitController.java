@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ProduitController {
 
-    private ProduitService produitService;
+    private final ProduitService produitService;
 
-    public ProduitController(ProduitService produitService)
-    {
+    public ProduitController(ProduitService produitService) {
         this.produitService = produitService;
     }
 

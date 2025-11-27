@@ -3,7 +3,7 @@ package org.example.easymart.mapper;
 import org.example.easymart.dto.request.ClientDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
 import org.example.easymart.entity.Client;
-import org.example.easymart.entity.User;
+import org.example.easymart.entity.Users;
 import org.example.easymart.service.UserService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -26,7 +26,7 @@ public abstract class ClientMapper {
     @Mapping(target = "userDtoResponse", source = "user")
    public abstract ClientDtoResponse toDtoResponse(Client client);
 
-    protected User map(Long userId) {
+    protected Users map(Long userId) {
         if (userId == null) return null;
       return this.userService.findUserById(userId);
     }
