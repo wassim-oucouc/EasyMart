@@ -10,5 +10,6 @@ public interface ProduitService {
     public ProduitDtoResponse createProduit(ProduitDTO produitDTO);
     public ProduitDtoResponse updateProduit(Long id,ProduitDTO produitDTO);
     public List<ProduitDtoResponse> getallProduit();
+    public void deleteProduitById(Long id);
 
 }

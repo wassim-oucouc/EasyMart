@@ -5,6 +5,7 @@ import org.example.easymart.entity.Produit;
 import org.example.easymart.exception.ProduitNotFoundException;
 import org.example.easymart.mapper.ProduitMapper;
 import org.example.easymart.repository.ProduitRepository;
+import org.example.easymart.service.CommandeService;
 import org.example.easymart.service.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,16 @@ public class ProduitServiceImpl implements ProduitService {
 
     private final ProduitRepository produitRepository;
     private final ProduitMapper produitMapper;
+    private final CommandeService commandeService;
 
 
 
     @Autowired
-    public ProduitServiceImpl(ProduitRepository produitRepository,ProduitMapper produitMapper)
+    public ProduitServiceImpl(ProduitRepository produitRepository, ProduitMapper produitMapper, CommandeService commandeService)
     {
         this.produitRepository = produitRepository;
         this.produitMapper = produitMapper;
+        this.commandeService = commandeService;
     }
 
     public ProduitDtoResponse createProduit(ProduitDTO produitDTO)
@@ -42,5 +45,19 @@ public class ProduitServiceImpl implements ProduitService {
     public List<ProduitDtoResponse> getallProduit()
     {
         return this.produitRepository.findAll().stream().map(produitMapper::toDtoResponse).toList();
+    }
+    public void deleteProduitById(Long id)
+    {
+       Produit produit =  this.produitRepository.findById(id).orElseThrow(() -> new ProduitNotFoundException("produit not exists id : " + id));
+        Boolean check = this.commandeService.checkCommandeExitsByProductId(id);
+        if (check)
+        {
+            produit.setDisabled(true);
+            this.produitRepository.save(produit);
+        }
+        else
+        {
+            this.produitRepository.delete(produit);
+        }
     }
 }
