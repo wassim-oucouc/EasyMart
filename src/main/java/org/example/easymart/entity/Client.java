@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.example.easymart.enumeration.CustomerTier;
 
+
 @Entity
 @Data
 public class Client{
