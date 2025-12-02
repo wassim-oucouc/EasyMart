@@ -20,8 +20,10 @@ public class Paiement {
     private Commande commande;
     private Integer numero_paiement;
     private BigDecimal montant;
+    private String bankName;
     private PaymentType paymentType;
     private Date datePaiement;
+    private Date dueDate;
     private PaymentStatus paymentStatus;
     private Date date_encaissement;
 

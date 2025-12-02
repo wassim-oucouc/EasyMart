@@ -1,11 +1,10 @@
 package org.example.easymart.repository;
 
-
-import org.example.easymart.entity.Client;
+import org.example.easymart.entity.Paiement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface ClientRepository extends JpaRepository<Client,Long> {
 
+@Repository
+public interface PaiementRepository extends JpaRepository<Paiement,Long> {
 }

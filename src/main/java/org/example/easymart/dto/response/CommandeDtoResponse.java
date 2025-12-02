@@ -17,10 +17,12 @@ public class CommandeDtoResponse {
     private ClientDtoResponse clientDtoResponse;
     private List<ProduitDtoResponse> productDtoResponseList;
     private Date date;
+    private Integer quantity;
     private BigDecimal sous_total;
     private BigDecimal remise;
     private BigDecimal tva;
-    private Long total;
+    private BigDecimal total;
     private String code_promo;
+    private BigDecimal montant_restant;
     private OrderStatus orderStatus;
 }

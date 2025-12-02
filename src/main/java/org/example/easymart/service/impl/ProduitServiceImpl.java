@@ -2,6 +2,7 @@ package org.example.easymart.service.impl;
 import org.example.easymart.dto.request.ProduitDTO;
 import org.example.easymart.dto.response.ProduitDtoResponse;
 import org.example.easymart.entity.Produit;
+import org.example.easymart.exception.InsufficientQuantityException;
 import org.example.easymart.exception.ProduitNotFoundException;
 import org.example.easymart.mapper.ProduitMapper;
 import org.example.easymart.repository.ProduitRepository;

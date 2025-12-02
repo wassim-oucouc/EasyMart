@@ -3,6 +3,7 @@ package org.example.easymart.service.impl;
 import org.example.easymart.dto.request.ClientDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
 import org.example.easymart.entity.Client;
+import org.example.easymart.enumeration.CustomerTier;
 import org.example.easymart.exception.ClientNotFoundException;
 import org.example.easymart.mapper.ClientMapper;
 import org.example.easymart.repository.ClientRepository;
@@ -51,4 +52,12 @@ public class ClientServiceImpl implements ClientService {
     {
         return this.clientRepository.findAll().stream().map(clientMapper::toDtoResponse).toList();
     }
+
+    public ClientDtoResponse getClientById(Long id)
+    {
+       Client client =  this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + id));
+       return this.clientMapper.toDtoResponse(client);
+    }
+
+
 }

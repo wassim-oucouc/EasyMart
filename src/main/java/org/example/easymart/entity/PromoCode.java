@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 @Data
 public class PromoCode {
@@ -14,5 +16,5 @@ public class PromoCode {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String code;
-    private Long pourcentage;
+    private BigDecimal pourcentage;
 }

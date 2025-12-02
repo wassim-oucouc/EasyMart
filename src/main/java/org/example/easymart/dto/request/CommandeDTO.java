@@ -1,9 +1,6 @@
 package org.example.easymart.dto.request;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import org.example.easymart.entity.Client;
 import org.example.easymart.enumeration.OrderStatus;
 
 import java.math.BigDecimal;
@@ -13,12 +10,14 @@ import java.util.List;
 public class CommandeDTO {
     private Long id;
     private Long clientId;
-    private List<ProduitDTO> produitDTOS;
+    private List<OrderItemDTO> orderItemDTOList;
     private Date date;
+    private Integer quantity;
     private BigDecimal sous_total;
     private BigDecimal remise;
     private BigDecimal tva;
-    private Long total;
+    private BigDecimal total;
     private String code_promo;
+    private BigDecimal montant_restant;
     private OrderStatus orderStatus;
 }

@@ -17,6 +17,7 @@ public class PaiementDtoResponse {
     private CommandeDtoResponse commandeDtoResponse;
     private Integer numero_paiement;
     private BigDecimal montant;
+    private String bankName;
     private PaymentType paymentType;
     private Date datePaiement;
     private PaymentStatus paymentStatus;
