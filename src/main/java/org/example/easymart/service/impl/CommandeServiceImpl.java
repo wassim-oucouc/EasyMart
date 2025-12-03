@@ -8,7 +8,9 @@ import org.example.easymart.dto.response.CommandeDtoResponse;
 import org.example.easymart.dto.response.PromoCodeDtoResponse;
 import org.example.easymart.entity.Commande;
 import org.example.easymart.entity.Produit;
+import org.example.easymart.enumeration.OrderStatus;
 import org.example.easymart.exception.CommandeNotFoundException;
+import org.example.easymart.exception.ConfirmationCommandeException;
 import org.example.easymart.exception.InsufficientQuantityException;
 import org.example.easymart.exception.ProduitNotFoundException;
 import org.example.easymart.mapper.CommandeMapper;
@@ -100,6 +102,7 @@ public class CommandeServiceImpl implements CommandeService {
         commandeDTO.setTva(montantHT.multiply(BigDecimal.valueOf(0.20)));
         commandeDTO.setTotal(montantHT.add(commandeDTO.getTva()));
         Commande commande = this.commandeMapper.toEntity(commandeDTO);
+        commande.setOrderStatus(OrderStatus.PENDING);
         this.commandeRepository.save(commande);
        return  this.commandeMapper.toDtoResponse(commande);
 
@@ -107,6 +110,20 @@ public class CommandeServiceImpl implements CommandeService {
 
     public CommandeDtoResponse confirmCommande(Long id)
     {
+        Commande commande = this.commandeRepository.findById(id).orElseThrow(() -> new CommandeNotFoundException("Commande not exists with id " + id));
+
+        if(commande.getMontant_restant().equals(BigDecimal.valueOf(0)))
+        {
+            ClientDtoResponse clientDtoResponse =  this.clientService.getClientById(commande.getClient().getId());
+            this.clientService.recalculateNiveauFidilitéByTotal(commande.getClient().getId(),commande.getTotal());
+        }
+        else
+        {
+            throw new ConfirmationCommandeException("Please Complete Your Payments Before Confirm Order!");
+        }
+
+        return this.commandeMapper.toDtoResponse(commande);
+
 
     }
 
@@ -115,7 +132,7 @@ public class CommandeServiceImpl implements CommandeService {
     {
         for(OrderItemDTO  orderItemDTOL : orderItemDTO)
         {
-            Produit produit =  this.produitRepository.findById(orderItemDTOL.getProduitId()).orElseThrow(() -> new ProduitNotFoundException("produit not exists id :" + produitId));
+            Produit produit =  this.produitRepository.findById(orderItemDTOL.getProduitId()).orElseThrow(() -> new ProduitNotFoundException("produit not exists id :" + orderItemDTOL.getProduitId()));
             int quantityCalculated = Math.toIntExact(produit.getStock() - orderItemDTOL.getQuantite());
             if(quantityCalculated < 0)
             {

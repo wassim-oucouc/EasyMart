@@ -1,16 +1,19 @@
 package org.example.easymart.service.impl;
 
 import org.example.easymart.dto.request.ClientDTO;
+import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
 import org.example.easymart.entity.Client;
 import org.example.easymart.enumeration.CustomerTier;
 import org.example.easymart.exception.ClientNotFoundException;
 import org.example.easymart.mapper.ClientMapper;
 import org.example.easymart.repository.ClientRepository;
+import org.example.easymart.repository.CommandeRepository;
 import org.example.easymart.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -19,12 +22,14 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
+    private final CommandeRepository commandeRepository;
 
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper)
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper clientMapper, CommandeRepository commandeRepository)
     {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
+        this.commandeRepository = commandeRepository;
     }
 
     public ClientDtoResponse createClient(ClientDTO clientDTO)
@@ -57,6 +62,26 @@ public class ClientServiceImpl implements ClientService {
     {
        Client client =  this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + id));
        return this.clientMapper.toDtoResponse(client);
+    }
+
+    public void recalculateNiveauFidilitéByTotal(Long clientId, BigDecimal total)
+    {
+        Client client =  this.clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + clientId));
+        int count = this.commandeRepository.countCommandeByClient_Id(clientId);
+        if((count >= 3 && count < 10) || total.compareTo(BigDecimal.valueOf(1050)) >= 0)
+        {
+            client.setCustomerTier(CustomerTier.SILVER);
+        }
+        else if((count >= 10 && count < 20) || total.compareTo(BigDecimal.valueOf(5150)) >= 0 )
+        {
+            client.setCustomerTier(CustomerTier.GOLD);
+        }
+        else if((count >= 20) || total.compareTo(BigDecimal.valueOf(15000)) >= 0)
+        {
+            client.setCustomerTier(CustomerTier.PLATINUM);
+        }
+
+        clientRepository.save(client);
     }
 
 
