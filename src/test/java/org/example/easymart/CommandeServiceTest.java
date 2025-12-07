@@ -144,7 +144,7 @@ public class CommandeServiceTest {
         commandeDtoResponse.setDate(new Date());
         commandeDtoResponse.setQuantity(2);
         commandeDtoResponse.setSous_total(BigDecimal.valueOf(2000));
-        commandeDtoResponse.setRemise(BigDecimal.valueOf(100)); // exemple de remise
+        commandeDtoResponse.setRemise(BigDecimal.valueOf(100));
         commandeDtoResponse.setTva(BigDecimal.valueOf(200));
         commandeDtoResponse.setTotal(BigDecimal.valueOf(2100));
         commandeDtoResponse.setCode_promo("PROMO10");
