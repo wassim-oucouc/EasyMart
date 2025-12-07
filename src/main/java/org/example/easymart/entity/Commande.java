@@ -19,7 +19,7 @@ public class Commande {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderItem> orderItems;
     private Date date;
     private BigDecimal sous_total;

@@ -15,7 +15,7 @@ public class CommandeDtoResponse {
 
     private Long id;
     private ClientDtoResponse clientDtoResponse;
-    private List<ProduitDtoResponse> productDtoResponseList;
+    private List<OrderItemDtoResponse> orderItemDtoResponseList;
     private Date date;
     private Integer quantity;
     private BigDecimal sous_total;

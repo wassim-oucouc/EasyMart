@@ -1,6 +1,7 @@
 package org.example.easymart.service.impl;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.request.OrderItemDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
@@ -24,6 +25,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CommandeServiceImpl implements CommandeService {
     private final CommandeRepository commandeRepository;
     private final CommandeMapper commandeMapper;
@@ -103,6 +105,7 @@ public class CommandeServiceImpl implements CommandeService {
         commandeDTO.setTotal(montantHT.add(commandeDTO.getTva()));
         Commande commande = this.commandeMapper.toEntity(commandeDTO);
         commande.setOrderStatus(OrderStatus.PENDING);
+        commande.setMontant_restant(commande.getTotal());
         this.commandeRepository.save(commande);
        return  this.commandeMapper.toDtoResponse(commande);
 
@@ -121,7 +124,6 @@ public class CommandeServiceImpl implements CommandeService {
         {
             throw new ConfirmationCommandeException("Please Complete Your Payments Before Confirm Order!");
         }
-
         return this.commandeMapper.toDtoResponse(commande);
 
 

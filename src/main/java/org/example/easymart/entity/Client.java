@@ -21,6 +21,7 @@ public class Client{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
+    @Enumerated(value = EnumType.STRING)
     private CustomerTier customerTier;
 
 
