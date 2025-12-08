@@ -9,4 +9,5 @@ public class UserDtoResponse {
     private String username;
     private String password;
     private Role role;
+
 }
