@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import org.example.easymart.enumeration.Role;
 
 @Entity
 @Data
@@ -15,6 +16,7 @@ public class Users {
     private long id;
     private String username;
     private String password;
+    private Role role;
 
 
 }

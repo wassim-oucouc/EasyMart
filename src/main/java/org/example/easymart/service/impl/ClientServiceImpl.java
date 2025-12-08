@@ -1,5 +1,6 @@
 package org.example.easymart.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.easymart.dto.request.ClientDTO;
 import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
@@ -68,6 +70,8 @@ public class ClientServiceImpl implements ClientService {
     {
         Client client =  this.clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + clientId));
         int count = this.commandeRepository.countCommandeByClient_Id(clientId);
+        log.info("total de commande du client {}",count);
+
         if((count >= 3 && count < 10) || total.compareTo(BigDecimal.valueOf(1050)) >= 0)
         {
             client.setCustomerTier(CustomerTier.SILVER);

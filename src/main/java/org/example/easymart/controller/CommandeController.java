@@ -1,5 +1,8 @@
 package org.example.easymart.controller;
 
+import jakarta.validation.Valid;
+import org.apache.coyote.Response;
+import org.example.easymart.aop.annotations.Secured;
 import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.response.CommandeDtoResponse;
 import org.example.easymart.service.CommandeService;
@@ -17,14 +20,21 @@ public class CommandeController {
         this.commandeService = commandeService;
     }
 
+    @Secured(role = "ADMIN")
     @PostMapping("/create/commande")
-    public ResponseEntity<CommandeDtoResponse> createCommande(@RequestBody CommandeDTO commandeDTO) {
+    public ResponseEntity<CommandeDtoResponse> createCommande(@Valid @RequestBody CommandeDTO commandeDTO) {
         return ResponseEntity.ok().body(this.commandeService.createCommande(commandeDTO));
     }
 
     @PutMapping("/confirm/commande")
-    public ResponseEntity<CommandeDtoResponse> confirmOrder(@RequestParam("orderId") Long orderId)
+    public ResponseEntity<CommandeDtoResponse> confirmOrder(@Valid @RequestParam("orderId") Long orderId)
     {
         return ResponseEntity.ok().body(this.commandeService.confirmCommande(orderId));
+    }
+
+    @PutMapping("/reject/commande")
+    public ResponseEntity<CommandeDtoResponse> rejectCommande(@RequestParam("orderId") Long orderId)
+    {
+        return ResponseEntity.ok().body(this.commandeService.rejectCommandeById(orderId));
     }
 }

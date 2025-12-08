@@ -1,5 +1,6 @@
 package org.example.easymart.controller;
 
+import jakarta.validation.Valid;
 import org.example.easymart.dto.request.PaiementDTO;
 import org.example.easymart.dto.response.PaiementDtoResponse;
 import org.example.easymart.service.PaiementService;
@@ -22,7 +23,7 @@ public class PaiementController {
     }
 
     @PostMapping("/make/paiement")
-    public ResponseEntity<PaiementDtoResponse> makePaiement(@RequestBody PaiementDTO paiementDTO)
+    public ResponseEntity<PaiementDtoResponse> makePaiement(@Valid @RequestBody PaiementDTO paiementDTO)
     {
         return ResponseEntity.ok().body(this.paiementService.makePaiement(paiementDTO));
     }

@@ -6,8 +6,10 @@ import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.request.OrderItemDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
 import org.example.easymart.dto.response.CommandeDtoResponse;
+import org.example.easymart.dto.response.ProduitDtoResponse;
 import org.example.easymart.dto.response.PromoCodeDtoResponse;
 import org.example.easymart.entity.Commande;
+import org.example.easymart.entity.OrderItem;
 import org.example.easymart.entity.Produit;
 import org.example.easymart.enumeration.OrderStatus;
 import org.example.easymart.exception.CommandeNotFoundException;
@@ -115,18 +117,30 @@ public class CommandeServiceImpl implements CommandeService {
     {
         Commande commande = this.commandeRepository.findById(id).orElseThrow(() -> new CommandeNotFoundException("Commande not exists with id " + id));
 
-        if(commande.getMontant_restant().equals(BigDecimal.valueOf(0)))
-        {
-            ClientDtoResponse clientDtoResponse =  this.clientService.getClientById(commande.getClient().getId());
-            this.clientService.recalculateNiveauFidilitéByTotal(commande.getClient().getId(),commande.getTotal());
-        }
-        else
+        if(commande.getMontant_restant().compareTo(BigDecimal.ZERO) != 0)
         {
             throw new ConfirmationCommandeException("Please Complete Your Payments Before Confirm Order!");
         }
+        this.clientService.recalculateNiveauFidilitéByTotal(commande.getClient().getId(),commande.getTotal());
+        commande.setOrderStatus(OrderStatus.CONFIRMED);
+        this.commandeRepository.save(commande);
         return this.commandeMapper.toDtoResponse(commande);
 
 
+    }
+
+    @Transactional
+    public CommandeDtoResponse rejectCommandeById(Long id)
+    {
+        Commande commande = this.commandeRepository.findById(id).orElseThrow(() -> new CommandeNotFoundException("Commande not exists with id " + id));
+        List<OrderItem> orderItems = commande.getOrderItems();
+        for(OrderItem orderItem : orderItems)
+        {
+            this.produitRepository.addQuantity(orderItem.getProduit().getId(),orderItem.getQuantite());
+        }
+        commande.setOrderStatus(OrderStatus.REJECTED);
+        this.commandeRepository.save(commande);
+       return  this.commandeMapper.toDtoResponse(commande);
     }
 
 

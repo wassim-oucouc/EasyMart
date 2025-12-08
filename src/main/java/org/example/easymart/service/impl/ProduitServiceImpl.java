@@ -9,6 +9,8 @@ import org.example.easymart.repository.ProduitRepository;
 import org.example.easymart.service.CommandeService;
 import org.example.easymart.service.ProduitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,5 +62,11 @@ public class ProduitServiceImpl implements ProduitService {
         {
             this.produitRepository.delete(produit);
         }
+    }
+
+    public List<ProduitDtoResponse> findProduitPaginated(int pageNumber,int pageSize)
+    {
+        Pageable pageable = PageRequest.of(pageNumber,pageSize);
+       return  this.produitRepository.findAll(pageable).stream().map(produitMapper::toDtoResponse).toList();
     }
 }

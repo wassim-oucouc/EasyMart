@@ -12,5 +12,6 @@ public interface CommandeService {
     public CommandeDtoResponse confirmCommande(Long id);
     public CommandeDtoResponse getCommandeById(Long commandeId);
     public void DeductMotantFromMotantRestant(BigDecimal montant, Long commandeId);
+    public CommandeDtoResponse rejectCommandeById(Long id);
 
 }

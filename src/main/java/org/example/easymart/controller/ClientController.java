@@ -1,6 +1,7 @@
 package org.example.easymart.controller;
 
 
+import jakarta.validation.Valid;
 import org.example.easymart.dto.request.ClientDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
 import org.example.easymart.service.ClientService;
@@ -19,12 +20,12 @@ public class ClientController {
     }
 
     @PostMapping("/client/create")
-    public ResponseEntity<ClientDtoResponse> createClient(@RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDtoResponse> createClient(@Valid @RequestBody ClientDTO clientDTO) {
         return ResponseEntity.ok().body(this.clientService.createClient(clientDTO));
     }
 
     @PutMapping("/client/update/{id}")
-    public ResponseEntity<ClientDtoResponse> updateClient(@PathVariable("id") Long id, @RequestBody ClientDTO clientDTO) {
+    public ResponseEntity<ClientDtoResponse> updateClient(@PathVariable("id") Long id, @Valid @RequestBody ClientDTO clientDTO) {
         return ResponseEntity.ok().body(this.clientService.updateClientById(id, clientDTO));
     }
 

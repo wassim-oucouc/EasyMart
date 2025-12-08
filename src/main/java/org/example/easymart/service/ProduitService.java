@@ -11,5 +11,6 @@ public interface ProduitService {
     public ProduitDtoResponse updateProduit(Long id,ProduitDTO produitDTO);
     public List<ProduitDtoResponse> getallProduit();
     public void deleteProduitById(Long id);
+    public List<ProduitDtoResponse> findProduitPaginated(int pageNumber,int pageSize);
 
 }

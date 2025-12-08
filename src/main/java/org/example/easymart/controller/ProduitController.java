@@ -1,11 +1,14 @@
 package org.example.easymart.controller;
 
 
+import jakarta.validation.Valid;
 import org.example.easymart.dto.request.ProduitDTO;
 import org.example.easymart.dto.response.ProduitDtoResponse;
 import org.example.easymart.service.ProduitService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ProduitController {
@@ -17,13 +20,13 @@ public class ProduitController {
     }
 
     @PostMapping("/product/create")
-    public ResponseEntity<ProduitDtoResponse> createProduit(@RequestBody ProduitDTO produitDTO)
+    public ResponseEntity<ProduitDtoResponse> createProduit(@Valid @RequestBody ProduitDTO produitDTO)
     {
         return ResponseEntity.ok().body(this.produitService.createProduit(produitDTO));
     }
 
     @PutMapping("/product/update/{id}")
-    public ResponseEntity<ProduitDtoResponse> updateProduit(@PathVariable("id") Long id,ProduitDTO produitDTO)
+    public ResponseEntity<ProduitDtoResponse> updateProduit(@PathVariable("id") Long id,@Valid @RequestBody ProduitDTO produitDTO)
     {
         return ResponseEntity.ok().body(this.produitService.updateProduit(id,produitDTO));
     }
@@ -33,5 +36,11 @@ public class ProduitController {
     {
         this.produitService.deleteProduitById(id);
         return ResponseEntity.ok().body("product is deleted");
+    }
+
+    @GetMapping("product/all/{size}/{page}")
+    public ResponseEntity<List<ProduitDtoResponse>> getAllProduitPaginate(@PathVariable("size") int size, @PathVariable("page") int page)
+    {
+        return ResponseEntity.ok().body(this.produitService.findProduitPaginated(page,size));
     }
 }

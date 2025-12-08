@@ -13,4 +13,8 @@ public interface ProduitRepository extends JpaRepository<Produit,Long> {
     @Transactional
     @Query(value = "UPDATE Produit  SET Produit.quantity = Produit.quantity - :quantityToSubtract WHERE Produit.id = :produitId" , nativeQuery = true)
     int subtractQuantity(@Param("produitId") Long produitId, @Param("quantityToSubtract") Long quantityToSubtract);
+
+    @Transactional
+    @Query(value = "UPDATE Produit  SET Produit.quantity = Produit.quantity + :quantityToAdd WHERE Produit.id = :produitId" , nativeQuery = true)
+    int addQuantity(@Param("produitId") Long produitId, @Param("quantityToAdd") int quantityToAdd);
 }
