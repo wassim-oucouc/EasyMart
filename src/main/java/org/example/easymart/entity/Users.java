@@ -1,9 +1,6 @@
 package org.example.easymart.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.example.easymart.enumeration.Role;
 
@@ -14,8 +11,10 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(unique = true)
     private String username;
     private String password;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
 
 

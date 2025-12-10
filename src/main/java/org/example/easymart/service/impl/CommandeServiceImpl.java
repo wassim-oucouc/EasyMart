@@ -2,6 +2,7 @@ package org.example.easymart.service.impl;
 
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.example.easymart.aop.annotations.Secured;
 import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.request.OrderItemDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
@@ -62,6 +63,7 @@ public class CommandeServiceImpl implements CommandeService {
 
     }
 
+    @Secured(role = {"ADMIN"})
     public CommandeDtoResponse getCommandeById(Long commandeId)
     {
        Commande commande = this.commandeRepository.findById(commandeId).orElseThrow(() -> new CommandeNotFoundException("commande not exists id : " + commandeId));
@@ -74,6 +76,7 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Transactional
+    @Secured(role = {"ADMIN"})
     public CommandeDtoResponse createCommande(CommandeDTO commandeDTO)
     {
         ClientDtoResponse clientDtoResponse =  this.clientService.getClientById(commandeDTO.getClientId());
@@ -113,6 +116,7 @@ public class CommandeServiceImpl implements CommandeService {
 
     }
 
+    @Secured(role = {"ADMIN"})
     public CommandeDtoResponse confirmCommande(Long id)
     {
         Commande commande = this.commandeRepository.findById(id).orElseThrow(() -> new CommandeNotFoundException("Commande not exists with id " + id));
@@ -130,6 +134,7 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Transactional
+    @Secured(role = {"ADMIN"})
     public CommandeDtoResponse rejectCommandeById(Long id)
     {
         Commande commande = this.commandeRepository.findById(id).orElseThrow(() -> new CommandeNotFoundException("Commande not exists with id " + id));

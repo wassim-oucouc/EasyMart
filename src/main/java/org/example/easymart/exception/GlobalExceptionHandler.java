@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +94,13 @@ public class GlobalExceptionHandler{
     {
         return ResponseEntity.status(HttpStatusCode.valueOf(403)).body(ex.getMessage());
     }
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<?> SQLException(SQLException ex)
+    {
+        return ResponseEntity.status(HttpStatusCode.valueOf(404)).body(ex.getMessage());
+    }
+
 
 
 

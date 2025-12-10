@@ -14,7 +14,6 @@ import org.example.easymart.mapper.CommandeMapper;
 import org.example.easymart.repository.CommandeRepository;
 import org.example.easymart.repository.ProduitRepository;
 import org.example.easymart.service.ClientService;
-import org.example.easymart.service.CommandeService;
 import org.example.easymart.service.DiscountService;
 import org.example.easymart.service.PromoCodeService;
 import org.example.easymart.service.impl.CommandeServiceImpl;
@@ -171,7 +170,122 @@ public class CommandeServiceTest {
         assertNotNull(commandeDtoResponseCreated);
         assertEquals(commandeDtoResponse.getCode_promo(),dto.getCode_promo());
 
+
+
     }
+
+    @Test
+    public void confirmCommandeTest()
+    {
+
+        Produit produit = Produit.builder()
+                .id(10L)
+                .nom("Laptop")
+                .prix(1000)
+                .stock(50L)
+                .disabled(false)
+                .build();
+
+        OrderItem itemEntity = new OrderItem();
+        itemEntity.setId(1L);
+        itemEntity.setProduit(produit);
+        itemEntity.setQuantite(2);
+        itemEntity.setTotalLigne(BigDecimal.valueOf(200));
+
+        Client client = new Client();
+        client.setId(5L);
+        client.setNom("John Doe");
+        client.setEmail("john.doe@example.com");
+
+        Commande commande = new Commande();
+        commande.setId(1L);
+        commande.setClient(client);
+        commande.setOrderItems(List.of(itemEntity));
+        commande.setDate(new Date());
+        commande.setQuantity(2);
+        commande.setSous_total(BigDecimal.ZERO);
+        commande.setRemise(BigDecimal.ZERO);
+        commande.setTva(BigDecimal.valueOf(40));
+        commande.setTotal(BigDecimal.valueOf(240));
+        commande.setCode_promo("PROMO10");
+        commande.setMontant_restant(BigDecimal.valueOf(240));
+        commande.setOrderStatus(OrderStatus.PENDING);
+
+        UserDtoResponse user = new UserDtoResponse();
+        user.setId(100L);
+        user.setUsername("john_doe");
+
+        ClientDtoResponse clientResponse = new ClientDtoResponse();
+        clientResponse.setId(5L);
+        clientResponse.setNom("John Doe");
+        clientResponse.setEmail("john.doe@example.com");
+        clientResponse.setCustomerTier(CustomerTier.SILVER);
+        clientResponse.setUserDtoResponse(user);
+
+        ProduitDtoResponse produitDtoResponse = new ProduitDtoResponse();
+        produitDtoResponse.setId(10L);
+        produitDtoResponse.setNom("Laptop");
+        produitDtoResponse.setPrix(1000);
+        produitDtoResponse.setStock(50L);
+
+        OrderItemDtoResponse item1 = new OrderItemDtoResponse();
+        item1.setId(1L);
+        item1.setProduitDtoResponse(produitDtoResponse);
+        item1.setQuantite(2);
+        item1.setTotalLigne(BigDecimal.valueOf(2000));
+
+        CommandeDtoResponse commandeDtoResponse = new CommandeDtoResponse();
+        commandeDtoResponse.setId(1L);
+        commandeDtoResponse.setClientDtoResponse(clientResponse);
+        commandeDtoResponse.setOrderItemDtoResponseList(List.of(item1));
+        commandeDtoResponse.setDate(new Date());
+        commandeDtoResponse.setQuantity(2);
+        commandeDtoResponse.setSous_total(BigDecimal.valueOf(2000));
+        commandeDtoResponse.setRemise(BigDecimal.valueOf(100)); // exemple de remise
+        commandeDtoResponse.setTva(BigDecimal.valueOf(200));
+        commandeDtoResponse.setTotal(BigDecimal.valueOf(2100));
+        commandeDtoResponse.setCode_promo("PROMO10");
+        commandeDtoResponse.setMontant_restant(BigDecimal.valueOf(2100));
+        commandeDtoResponse.setOrderStatus(OrderStatus.PENDING);
+
+        CommandeDTO dto = new CommandeDTO();
+        dto.setId(1L);
+        dto.setClientId(5L);
+        dto.setDate(new Date());
+        dto.setCode_promo("PROMO10");
+        dto.setOrderStatus(OrderStatus.PENDING);
+        dto.setSous_total(BigDecimal.valueOf(520));
+        dto.setRemise(BigDecimal.ZERO);
+        dto.setTva(BigDecimal.valueOf(40));
+        dto.setTotal(BigDecimal.valueOf(240));
+        dto.setMontant_restant(BigDecimal.valueOf(240));
+        dto.setQuantity(2);
+        OrderItemDTO item = new OrderItemDTO();
+        item.setId(1L);
+        item.setProduitId(10L);
+        item.setQuantite(2);
+        item.setTotalLigne(BigDecimal.valueOf(200));
+        dto.setOrderItemDTOList(List.of(item));
+
+
+        when(commandeRepository.findById(1L)).thenReturn(Optional.of(commande));
+
+
+        commande.setMontant_restant(BigDecimal.valueOf(0));
+
+//        assertThrows(ConfirmationCommandeException.class, () -> commandeService.confirmCommande(1L));
+
+        when(commandeMapper.toDtoResponse(commande)).thenReturn(commandeDtoResponse);
+
+        when(commandeRepository.save(commande)).thenReturn(commande);
+
+CommandeDtoResponse commandeDtoResponseCreated = this.commandeService.confirmCommande(1L);
+
+        assertEquals(commandeDtoResponseCreated.getCode_promo(),commande.getCode_promo());
+
+    }
+
+
 
 
 }

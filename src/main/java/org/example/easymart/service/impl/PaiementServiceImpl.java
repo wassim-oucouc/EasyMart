@@ -1,6 +1,7 @@
 package org.example.easymart.service.impl;
 
 import jakarta.transaction.Transactional;
+import org.example.easymart.aop.annotations.Secured;
 import org.example.easymart.dto.request.PaiementDTO;
 import org.example.easymart.dto.response.CommandeDtoResponse;
 import org.example.easymart.dto.response.PaiementDtoResponse;
@@ -34,6 +35,7 @@ public class PaiementServiceImpl implements PaiementService {
     }
 
     @Transactional
+    @Secured(role = {"ADMIN"})
     public PaiementDtoResponse makePaiement(PaiementDTO paiementDTO)
     {
         CommandeDtoResponse commandeDtoResponse = this.commandeService.getCommandeById(paiementDTO.getCommandeId());

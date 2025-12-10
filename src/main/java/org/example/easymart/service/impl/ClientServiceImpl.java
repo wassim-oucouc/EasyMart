@@ -1,6 +1,7 @@
 package org.example.easymart.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.easymart.aop.annotations.Secured;
 import org.example.easymart.dto.request.ClientDTO;
 import org.example.easymart.dto.request.CommandeDTO;
 import org.example.easymart.dto.response.ClientDtoResponse;
@@ -34,12 +35,14 @@ public class ClientServiceImpl implements ClientService {
         this.commandeRepository = commandeRepository;
     }
 
+    @Secured(role = {"ADMIN"})
     public ClientDtoResponse createClient(ClientDTO clientDTO)
     {
         Client client = this.clientMapper.toEntity(clientDTO);
         Client clientCreated = this.clientRepository.save(client);
        return  this.clientMapper.toDtoResponse(clientCreated);
     }
+    @Secured(role = {"ADMIN"})
     public ClientDtoResponse updateClientById(Long id,ClientDTO clientDTO)
     {
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + id));
@@ -51,6 +54,7 @@ public class ClientServiceImpl implements ClientService {
         return this.clientMapper.toDtoResponse(this.clientRepository.save(client));
 
     }
+    @Secured(role = {"ADMIN"})
     public void deleteClientById(Long id)
     {
         this.clientRepository.deleteById(id);
@@ -60,6 +64,7 @@ public class ClientServiceImpl implements ClientService {
         return this.clientRepository.findAll().stream().map(clientMapper::toDtoResponse).toList();
     }
 
+    @Secured(role = {"ADMIN"})
     public ClientDtoResponse getClientById(Long id)
     {
        Client client =  this.clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException("client not exists id : " + id));

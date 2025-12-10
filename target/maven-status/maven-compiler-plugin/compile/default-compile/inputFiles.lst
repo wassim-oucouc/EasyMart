@@ -1,3 +1,4 @@
+/mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/aop/aspects/AuthenticationAspect.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/enumeration/OrderStatus.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/repository/ProduitRepository.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/service/impl/AuthServiceImpl.java
@@ -30,10 +31,13 @@
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/exception/InsufficientQuantityException.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/entity/PromoCode.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/entity/OrderItem.java
+/mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/exception/UserNotAllowed.java
+/mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/exception/UserNotAuthenticated.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/service/AuthService.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/service/impl/UserServiceImpl.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/entity/Users.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/exception/InvalidCredentialsException.java
+/mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/aop/annotations/Secured.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/controller/PaiementController.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/dto/request/UserDTO.java
 /mnt/c/Users/Youcode/Desktop/easyMart/src/main/java/org/example/easymart/repository/PaiementRepository.java

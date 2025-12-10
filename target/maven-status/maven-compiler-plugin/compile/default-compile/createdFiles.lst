@@ -9,8 +9,10 @@ org/example/easymart/dto/response/PromoCodeDtoResponse.class
 org/example/easymart/repository/ProduitRepository.class
 org/example/easymart/mapper/OrderItemMapper.class
 org/example/easymart/controller/PaiementController.class
+org/example/easymart/aop/aspects/AuthenticationAspect.class
 org/example/easymart/dto/response/PaiementDtoResponse.class
 org/example/easymart/dto/response/UserDtoResponse.class
+org/example/easymart/aop/annotations/Secured.class
 org/example/easymart/mapper/CommandeMapper.class
 org/example/easymart/dto/request/PromoCodeDTO.class
 org/example/easymart/dto/request/CommandeDTO.class
@@ -38,6 +40,7 @@ org/example/easymart/mapper/PaiementMapper.class
 org/example/easymart/service/DiscountService.class
 org/example/easymart/service/CommandeService.class
 org/example/easymart/service/impl/CommandeServiceImpl.class
+org/example/easymart/exception/UserNotAllowed.class
 org/example/easymart/mapper/PromoCodeMapper.class
 org/example/easymart/enumeration/PaymentType.class
 org/example/easymart/service/ClientService.class
@@ -51,6 +54,7 @@ org/example/easymart/exception/InvalidCredentialsException.class
 org/example/easymart/exception/InsufficientQuantityException.class
 org/example/easymart/service/impl/PromoCodeServiceImpl.class
 org/example/easymart/mapper/ProduitMapper.class
+org/example/easymart/exception/UserNotAuthenticated.class
 org/example/easymart/entity/Commande.class
 org/example/easymart/service/impl/ProduitServiceImpl.class
 org/example/easymart/entity/PromoCode.class

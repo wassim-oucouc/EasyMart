@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import org.example.easymart.dto.request.ProduitDTO;
 import org.example.easymart.dto.response.ProduitDtoResponse;
 import org.example.easymart.service.ProduitService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class ProduitController {
     }
 
     @GetMapping("product/all/{size}/{page}")
-    public ResponseEntity<List<ProduitDtoResponse>> getAllProduitPaginate(@PathVariable("size") int size, @PathVariable("page") int page)
+    public ResponseEntity<Page<ProduitDtoResponse>> getAllProduitPaginate(@PathVariable("size") int size, @PathVariable("page") int page)
     {
         return ResponseEntity.ok().body(this.produitService.findProduitPaginated(page,size));
     }

@@ -20,7 +20,6 @@ public class CommandeController {
         this.commandeService = commandeService;
     }
 
-    @Secured(role = "ADMIN")
     @PostMapping("/create/commande")
     public ResponseEntity<CommandeDtoResponse> createCommande(@Valid @RequestBody CommandeDTO commandeDTO) {
         return ResponseEntity.ok().body(this.commandeService.createCommande(commandeDTO));
