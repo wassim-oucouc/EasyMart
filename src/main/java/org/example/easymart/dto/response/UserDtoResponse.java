@@ -7,7 +7,6 @@ import org.example.easymart.enumeration.Role;
 public class UserDtoResponse {
     private long id;
     private String username;
-    private String password;
     private Role role;
 
 }
