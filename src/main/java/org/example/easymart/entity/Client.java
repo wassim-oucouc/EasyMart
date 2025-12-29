@@ -2,16 +2,11 @@ package org.example.easymart.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import org.example.easymart.enumeration.CustomerTier;
 
-
 @Entity
 @Data
-@Builder
-@AllArgsConstructor
 public class Client{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,12 +15,8 @@ public class Client{
     private String email;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
-    @Enumerated(value = EnumType.STRING)
+    private User user;
     private CustomerTier customerTier;
 
 
-    public Client() {
-
-    }
 }

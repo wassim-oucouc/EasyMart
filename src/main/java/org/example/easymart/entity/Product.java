@@ -1,6 +1,5 @@
 package org.example.easymart.entity;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,10 +8,13 @@ import lombok.Data;
 
 @Entity
 @Data
-public class PromoCode {
+public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String code;
-    private Long pourcentage;
+    private String nom;
+    private Integer prix;
+    private Long stock;
+
 }
